@@ -30,7 +30,7 @@ def cleaning(text):
     return text
 
 
-def load_songs(path='C:/TextAI/spotify/mrs/mrs/training_data/spotify_songs.csv'):
+def load_songs(path='C:/TextAI/recommendation system/vishwang/MRS/training_data/spotify_songs.csv'):
     df = pd.read_csv(path)
     dfen = df[df['language'] == 'en']
     dfen.dropna(inplace=True, axis=0)

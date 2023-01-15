@@ -1,18 +1,19 @@
 from flask import Flask, render_template, request
-from ..music_recommender_system.predict import predict
+from ..MRS.predict import predict
+import pandas as pd
 
 
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def predict():
+def recommend():
     """View that handles the default get request and the post request when
     a form is submitted."""
 
     # when the form is submitted this route gets a POST request
     if request.method == 'POST':
-        review_text = request.form["text_input"]
+        review_text = request.form["lyric_input"]
 
         # if no input provided
         if not review_text.strip():
@@ -20,13 +21,14 @@ def predict():
 
         # catch any error during prediction
         try:
-            predictions = make_prediction_raw([review_text])
+            predictions = predict(review_text) # dataframe of recommendations
         except Exception as e:
             return render_template('index.html', error=e)
 
-        prediction = 'positive' if predictions[0] == 1 else 'negative'
+        predictions = predictions.drop(columns='lyrics').to_html(table_id='recommendations')
+
         # finally render template with correct sentiment
-        return render_template('index.html', prediction=prediction)
+        return render_template('index.html', prediction=predictions)
 
     # this is the 'home' route with a get request (no form submitted)
     else:

@@ -1,6 +1,6 @@
 import pandas as pd
 # import numpy as np
-from preprocessing import get_preprocessed_data, cleaning
+from .preprocessing import get_preprocessed_data, cleaning
 from gensim.models.doc2vec import Doc2Vec
 from nltk.tokenize import word_tokenize
 import logging  # Setting up the loggings to monitor gensim

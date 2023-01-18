@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, make_response
 from ..MRS.predict import predict
 import pandas as pd
-
 
 app = Flask(__name__)
 
@@ -21,7 +20,7 @@ def recommend():
 
         # catch any error during prediction
         try:
-            predictions = predict(review_text) # dataframe of recommendations
+            predictions = predict(review_text)  # dataframe of recommendations
         except Exception as e:
             return render_template('index.html', error=e)
 
@@ -35,5 +34,38 @@ def recommend():
         return render_template('index.html')
 
 
+@app.route('/api/recommend/v1', methods=['POST'])
+def predict_api():
+    """
+    JSON Response for requests over api
+    waiting:
+        '{"input": "text"}'
+    returning:
+
+    """
+
+    # when the form is submitted this route gets a POST request
+    if request.method == 'POST':
+        lyrics = request.json["input"]
+
+        # if no input provided
+        if not lyrics.strip():
+            return jsonify({'prediction': "", 'error': "No input text."}), 400
+
+        # catch any error during prediction
+        try:
+            predictions = predict(lyrics)
+        except Exception as _:
+            return jsonify({'recommendations': "", 'error': "Something wrong in server."}), 500
+
+        return predictions.drop(columns='lyrics').to_json()
+    elif request.method == 'OPTIONS':
+        # temporary solution for cross site resource sharing
+        # later, a library can be used.
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

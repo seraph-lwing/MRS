@@ -36,7 +36,7 @@ def cleaning(text):
     return text
 
 
-def load_songs(path='C:/TextAI/recommendation system/vishwang/MRS/MRS/training_data/spotify_songs.csv'):
+def load_songs(path='/training_data/spotify_songs.csv'):
     """
     function to preprocess the data and generate the database for the recommendation engine
     the csv needs to have the same columns as given.

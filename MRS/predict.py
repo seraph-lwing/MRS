@@ -7,9 +7,17 @@ import logging  # Setting up the loggings to monitor gensim
 
 logging.basicConfig(filename='logs/prediction_logs.log', format="%(levelname)s - %(asctime)s: %(message)s",
                     datefmt='%H:%M:%S', level=logging.INFO)
+import os
+
+dirname = os.path.dirname(__file__)
+print(dirname)
+preprocessed = os.path.join(dirname,'preprocessed_data.csv')
+print(preprocessed)
+modelpath = os.path.join(dirname,'models/d2v.model')
+print(modelpath)
 
 
-def predict(lyrics, model_path='C:/TextAI/recommendation system/vishwang/MRS/MRS/models/d2v.model'):
+def predict(lyrics, model_path=modelpath):
     """
     function to predict the next few songs based on the lyrics given
     args:
@@ -18,7 +26,7 @@ def predict(lyrics, model_path='C:/TextAI/recommendation system/vishwang/MRS/MRS
         recommendations of the songs and other metadata
     """
     lyrics = cleaning(lyrics)
-    song_details = pd.read_csv('C:/TextAI/recommendation system/vishwang/MRS/MRS/preprocessed_data.csv')
+    song_details = pd.read_csv(preprocessed)
     model = Doc2Vec.load(model_path)
     # to find the vector of a document which is not in training data
     # sample = str(dfen.sample()['combined'].values)

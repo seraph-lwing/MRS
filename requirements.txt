@@ -1,6 +1,10 @@
+apispec==6.0.2
+apispec_webframeworks==0.5.2
 Flask==2.2.2
 gensim==4.3.0
+marshmallow==3.19.0
 matplotlib==3.6.2
 nltk==3.8.1
 numpy==1.24.1
 pandas==1.5.2
+Werkzeug==2.2.2

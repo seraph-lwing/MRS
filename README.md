@@ -26,5 +26,21 @@ in order to run the api, run the following command in the api directory:
 ```
 flask --app app run
 ```
+# Docker
 
-input lyrics, and enjoy the recommendations
+
+
+You can also use the Dockerfile to directly build an image with all dependencies and use the web app.
+
+To build the image:
+```
+docker build -t <imagename>:<tag> <rootdirectory>
+```
+After that just run your image as a container:
+
+```
+docker run -d -p <localport>:5000 <imagename>:<tag>
+```
+Then you can connect with the web app via localhost:<localport> in your browser.
+
+## input lyrics, and enjoy the recommendations!

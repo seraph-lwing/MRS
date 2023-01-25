@@ -43,7 +43,7 @@ docker run -d -p <localport>:5000 <imagename>:<tag>
 ```
 Then you can connect with the web app via localhost:<localport> in your browser.
 
-#Docker
+# Docker
 You can also use the Dockerfile to directly build an image with all dependencies and use the web app.
 
 To build the image:
